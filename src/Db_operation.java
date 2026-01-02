@@ -10,10 +10,12 @@ public class Db_operation {
 public static void add(Scanner dd,Connection con)throws SQLException {
 		String insertQuery = "INSERT INTO classData(stu_name,stu_Id,stu_location) VALUES (?,?,?)";
         PreparedStatement ps = con.prepareStatement(insertQuery);
-        System.out.println("Enter value  to insert first student name, second roll no,third location ");
-    	String name = dd.nextLine();
-    	dd.next();
+        System.out.println("Enter Student name");
+    	  String name = dd.nextLine();
+    	System.out.println("Enter Student id");
     	int rollno = dd.nextInt();
+    	dd.nextLine();
+    	System.out.println("Enter Student location");
     	String location = dd.next();
     	 ps.setString(1,name);             
          ps.setInt(2, rollno);     
@@ -43,20 +45,23 @@ public static void add(Scanner dd,Connection con)throws SQLException {
 		 String querry ="";
 		 System.out.println("Enter stud_ID whose want to update");
 		 int id  = dd.nextInt();
-		 System.out.println("Enter choice to update things");
+		 dd.nextLine();
+
 		 System.out.println("Enter 1 for update name");
 		 System.out.println("Enter 2 for update stu_location");
+		 System.out.println("Enter choice to update things");
 		 int choice = dd.nextInt();
+		 dd.nextLine();
 		 switch(choice) {
 		 case 1: 
 			 System.out.println("Enter new_Name");
-			 String newname = dd.next();
-			 querry = "UPDATE classData SET Stu_name ="+ newname +"WHERE stu_id ="+id;
+			 String newname = dd.nextLine();
+			 querry = "UPDATE classData SET Stu_name = '"+ newname +"'WHERE stu_id ="+id;
 		     break;
 		 case 2: 
 			 System.out.println("Enter new_Location");
 			 String newLocation = dd.next();
-			 querry = "UPDATE classData SET stu_location ="+ newLocation +"WHERE student_id ="+id;
+			 querry = "UPDATE classData SET stu_location = '"+ newLocation +"' WHERE stu_id ="+id;
 		     break;
 		     
 		  default :
@@ -84,6 +89,17 @@ public static void add(Scanner dd,Connection con)throws SQLException {
 		        System.out.println(id + "\t" + name + "\t" + location);
 		    }
 		}
+	 public static boolean isStudentPresent(Connection con, int id) throws SQLException {
+		    String checkQuery = "SELECT COUNT(*) FROM classData WHERE stu_id = ?";
+		    PreparedStatement ps = con.prepareStatement(checkQuery);
+		    ps.setInt(1, id);
+		     ResultSet rs = ps.executeQuery();
+		    if (rs.next()) {
+		        int count = rs.getInt(1);
+		        return count > 0; 
+		    }
+		    return false;
+	  }
 	
 	public static void main(String[] args) throws SQLException {
 		Connection con =null;
@@ -108,9 +124,11 @@ public static void add(Scanner dd,Connection con)throws SQLException {
 		System.out.println("Enter 2  to perform delete operation");
 		System.out.println("Enter 3 to perform update operation");
 		System.out.println("Enter 4 to perform showData operation");
+		System.out.println("Enter 5 to Exit ");
 		System.out.println("Enter choice to perform operation");
-		choice = dd.nextInt();
 		
+	choice = dd.nextInt();
+		dd.nextLine();	
 	switch(choice) {
 		case 1:
 			add(dd,con);
@@ -124,12 +142,17 @@ public static void add(Scanner dd,Connection con)throws SQLException {
 		case 4: 
 			showData(con);
 			break;
+		case 5: 
+			System.out.println("Enter stu-_id to check student present or ");
+			int id = dd.nextInt();
+		System.out.println(isStudentPresent(con,id)?"Student present in class":"Student not present in class");
+		  break;
 		default : 
-			System.out.println("Enter valid name");
+			System.out.println("Enter valid choice");
 		
 	}
 	try {
-	    Thread.sleep(10000); // 10 seconds
+	    Thread.sleep(10); 
 	} catch (InterruptedException e) {
 	    e.printStackTrace();
 	}
