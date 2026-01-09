@@ -47,40 +47,46 @@ public class Percentage_Increage {
 
 		}
 	 
-	 public static void modifydata(Scanner dd,Connection con) throws SQLException {
+ public static void modifydata(Scanner dd,Connection con) throws SQLException {
 		 String querry ="";
-		 System.out.println("press 1 for subtract percentage"+"\n"+" press 2 for icrease percentage");
-		 int choice = dd.nextInt();
-		 switch (choice) {
-		 case 1: 
-			 System.out.println("Enter stu_Id");
-			 int id = dd.nextInt();
-			 System.out.println("Enter percentage for subtraction");
-			 double per= dd.nextDouble();
-			 querry = "UPDATE STUdata set stu_percentage = stu_percentage - ? where stu_id =?";
-			 PreparedStatement ps = con.prepareStatement(querry);
-			 ps.setDouble(1,per);
-			 ps.setInt(2,id);
-			 int rows = ps.executeUpdate();
-			 System.out.println(rows>0?"percentage modify successfully":"Invalid data");
-			 break;
-			 
-		 case 2: 
-			 System.out.println("Enter stu_Id");
-			 int id1 = dd.nextInt();
-			 System.out.println("Enter percentage for Increase");
-			 double per1= dd.nextDouble();
-			 querry = "UPDATE STUdata set stu_percentage = stu_percentage +? where stu_id =?";
+//		 System.out.println("press 1 for subtract percentage"+"\n"+" press 2 for icrease percentage");
+//		 int choice = dd.nextInt();
+//		 switch (choice) {
+//		 case 1: 
+//			 System.out.println("Enter stu_Id");
+//			 int id = dd.nextInt();
+//			 System.out.println("Enter percentage for subtraction");
+//			 double per= dd.nextDouble();
+//			 System.out.println("Enter branch for subtraction");
+//			 String branch = dd.next();
+//			 querry = "UPDATE STUdata set stu_percentage = stu_percentage - ? where stu_id =? and stu_branch =?";
+//			 PreparedStatement ps = con.prepareStatement(querry);
+//			 ps.setDouble(1,per);
+//			 ps.setInt(2,id);
+//			 ps.setString(3, branch);
+//			 int rows = ps.executeUpdate();
+//			 System.out.println(rows>0?"percentage modify successfully":"Invalid data");
+//			 break;
+//			 
+//		 case 2: 
+//			 System.out.println("Enter stu_Id");
+//			 int id1 = dd.nextInt();
+//			 System.out.println("Enter percentage for Increase");
+//			 double per1= dd.nextDouble();
+//			 System.out.println("Enter branch for Increase");
+//			 String branch1 = dd.next();
+			 querry = "UPDATE STUdata set stu_percentage = stu_percentage + 5 where stu_branch= 'cse' ";
 			 PreparedStatement ps1 = con.prepareStatement(querry);
-			 ps1.setDouble(1,per1);
-			 ps1.setInt(2,id1);
+//			 ps1.setDouble(1,per1);
+//			 ps1.setInt(2,id1);
+//			 ps1.setString(3, branch1);
 			 int rows1 = ps1.executeUpdate();
 			 System.out.println(rows1>0?"percentage modify successfully":"Invalid data");
-			 break;
-			 default :
-				 System.out.println("Enter valid data");
+//			 break;
+//			 default :
+//				 System.out.println("Enter valid data");
 		 
-		 }
+		 
 	 }
 
 	
@@ -135,3 +141,4 @@ while(choice !=0) {
 	}
 
 }
+
